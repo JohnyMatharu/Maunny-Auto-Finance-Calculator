@@ -1,0 +1,73 @@
+
+#footer
+{
+    white-space: nowrap;
+    display: flex; 
+    align-items: center; 
+    flex-direction: row;
+    text-align: center;
+    /* height: 45px; */
+    height: 65px;
+/* padding-left: 10%;   */
+/* padding-right: 10%;  */
+}
+
+.space
+{
+   width: 16.66%;
+  
+}
+@media only screen and (max-width: 890px)
+ and (min-device-width: 414px)
+{
+    .space
+      {
+           width: 25%;
+        
+      }
+    }
+
+    @media only screen and (max-width: 890px)
+    and (min-device-width: 414px)
+{
+    #Github 
+      {
+           display: none;
+        
+      }
+    }
+
+    @media only screen and (max-width: 890px)
+    and (min-device-width: 414px)
+    {
+        #Stack-OverFlow
+          {
+               display: none;
+            
+          }
+        }
+
+        .fa-envelope
+        {
+          color: #4F9CC8;
+        }
+        .fa-facebook
+        {
+          color: #4F9CC8;
+        }
+        .fa-linkedin
+        {
+          color: #4F9CC8;
+        }
+        .fa-github
+        {
+          color: #4F9CC8;
+        }
+        .fa-stack-overflow
+        {
+          color: #4F9CC8;
+        }
+
+
+
+        /* all media queries have been checked */

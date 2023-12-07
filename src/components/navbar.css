@@ -1,0 +1,62 @@
+* { 
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.nav {
+    width: 100%;    
+    justify-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    font-family: 'Futura';
+    padding-top: 1%;
+    padding-bottom: 1%;
+    
+}
+
+.App
+{
+    padding-top: 1.2px;
+}
+
+#sectionOne{
+    width:33.3%; 
+}
+#sectionTwo
+{
+    /* padding-top: 0.5%; */
+    width: 66.6%;    
+    justify-content: space-between;
+    align-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.aboutMe 
+{
+    width: 50%;
+}
+.Resume
+{
+    padding-top: 3.6px;
+    width: 50%;
+    font-family: 'Futura';    
+padding-left: 39px; 
+
+}
+
+
+
+.fourthLink
+
+{
+   /* font-size: 18px; */
+ 
+/* color: #808080; */
+font-family: 'Futura';
+}
+/* this is to be checked */
+

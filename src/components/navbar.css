@@ -35,18 +35,42 @@
     flex-direction: row;
 }
 
-.aboutMe 
+
+
+.Cart
 {
     width: 50%;
+    padding-right: 84px;
 }
-.Resume
+
+@media only screen and (max-width: 890px)
+and (min-device-width: 414px)
+{
+.Cart
+ {
+    width: 100%;
+    padding-left: 34px;
+ 
+ }
+  }
+
+.Detail
 {
     padding-top: 3.6px;
     width: 50%;
     font-family: 'Futura';    
-padding-left: 39px; 
-
 }
+
+
+@media only screen and (max-width: 890px)
+and (min-device-width: 414px)
+{
+.Detail
+ {
+    display: none;
+ }
+  }
+
 
 
 
@@ -60,3 +84,98 @@ font-family: 'Futura';
 }
 /* this is to be checked */
 
+
+#carSize
+{
+    
+   
+    width: 19%;
+    /* padding-right: 6px; */
+    /* height: 100%; */
+    /* padding needs to be fixed  */
+    padding-bottom: 9px;
+
+}
+
+@media only screen and (max-width: 890px)
+and (min-device-width: 414px)
+{
+
+
+    #carSize
+    {
+        
+        width: .0001%;
+      
+        padding-bottom: 9px;
+       
+    
+    }
+  }
+
+
+
+
+
+#car
+{
+width: 100%;
+/* padding-top: 1px; */
+padding-left: 13px;
+height: 65%;
+font-size: 18px;
+}
+
+@media only screen and (max-width: 890px)
+and (min-device-width: 414px)
+{
+#car
+ 
+    {
+      width: 150%;
+/* padding-top: 1px; */
+padding-left: 150px;
+height: 65%;
+font-size: 18px;
+    }
+ 
+  }
+
+
+#number
+{
+ /* padding-bottom: 6px; */
+    width: 100%;
+    height: 35%; 
+    font-family: roboto;
+    font-weight: bolder;
+}
+
+#payment
+{
+    padding-top: 2px;
+    justify-content: space-between;
+    align-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+
+@media only screen and (max-width: 890px)
+and (min-device-width: 414px)
+{
+#payment
+ 
+    {
+        width: 100%;
+ padding-left: 70px;
+        padding-top: 2px;
+        justify-content: space-between;
+        align-content: center;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+    }
+ 
+  }

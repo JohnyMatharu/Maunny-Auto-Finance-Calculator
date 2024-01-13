@@ -12,9 +12,38 @@
 /* padding-right: 10%;  */
 }
 
+
+#copyright
+{
+  color: black;
+  font-Size: 18px; 
+  font-Weight: bolder; 
+  font-Family: roboto; 
+  padding-Left: 951px;
+
+}
+
+
+
+@media only screen and (max-width: 890px)
+and (min-device-width: 414px)
+{
+  #copyright
+ {
+    color: black;
+    font-Size: 18px; 
+    font-Weight: bolder; 
+    font-Family: roboto; 
+    padding-Left: 164px;  
+ }
+  }
+
+
+
 .space
 {
-   width: 16.66%;
+   width: 17.66%;
+
   
 }
 @media only screen and (max-width: 890px)
@@ -22,10 +51,13 @@
 {
     .space
       {
-           width: 25%;
+           width: 5.6%;
+   
+  
         
       }
     }
+
 
     @media only screen and (max-width: 890px)
     and (min-device-width: 414px)

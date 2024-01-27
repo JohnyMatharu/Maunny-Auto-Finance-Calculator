@@ -4,17 +4,242 @@ import { MDBContainer} from "mdbreact";
 // import $ from 'jquery';
 import pic1 from '../pictures/pic1.jpeg';
 // import Form from 'react-bootstrap/Form';
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import '../components/navbar.css';
 import { Link } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { withRouter } from "react-router-dom";
-import truckPic from '../pictures/truck.png'
 import carPic from '../pictures/car.png'
+import interac from '../pictures/interac.png'
+import visaMastercard from '../pictures/visaMastercard.png'
+import emailjs from '@emailjs/browser';
+import { addWeeks } from '@progress/kendo-date-math';
+import moment from 'moment';
+
+
+let dates = new Date()
+let newDate = addWeeks(dates, 2); // Returns a new Date instance.
+console.log(newDate);
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      date: moment(newDate.toLocaleString()).format('MMMM Do YYYY')
+    };
+
+
+  }
+  render() {
+    return (this.state.date);
+  }
+}
+
+
+
+const validName = new RegExp('^[A-Za-z-\'\" ]+$');
+// its important to put the ^ as thats beginning then + which is to continue search till this point and $ is till end
+const validEmail = new RegExp(
+  '^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$'
+);
+const validPhone = new RegExp('^([0-9]{10})$');
+const validStreet = new RegExp('^([A-Za-z0-9\-\'\"\.\#\&\(\)\/:\,\\\\ ])+$');
+const validUnit = new RegExp('^([A-Za-z0-9\# ])+$'); 
+const validCity = new RegExp('^[A-Za-z-\'\" ]+$');
+const validProvince = new RegExp('^[A-Za-z-\'\" ]+$');
+const validZip = new RegExp('^[A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9]$'); 
+ const validDown = new RegExp('^([0-9])+$'); 
+const validCardName = new RegExp('^[A-Za-z-\'\" ]+$');
+const validCardNumber = new RegExp('^([0-9]{16})$'); 
+const validExpiry = new RegExp('^[0-9][0-9][\/\\\\][0-9][0-9]$'); 
+const validCvv = new RegExp('^([0-9]{3})$'); 
+
 
 
   export default function ShoppingCart() {
+    const [name, setName] = useState (JSON.parse(localStorage.getItem('name'))||'');
     const [count, setCount] = useState (+localStorage.getItem('count')||0);
+    const [phone, setPhone] = useState (JSON.parse(localStorage.getItem('phone'))||'');
+    const [email, setEmail] = useState (JSON.parse(localStorage.getItem('email'))||'');
+    const [street, setStreet] = useState (JSON.parse(localStorage.getItem('street'))||'');
+    const [unit, setUnit] = useState (JSON.parse(localStorage.getItem('unit'))||'');
+    const [city, setCity] = useState (JSON.parse(localStorage.getItem('city'))||'');
+    const [province, setProvince] = useState (JSON.parse(localStorage.getItem('province'))||'');
+    const [zip, setZip] = useState (JSON.parse(localStorage.getItem('zip'))||'');
+    const [down, setDown] = useState (JSON.parse(localStorage.getItem('down'))||'');
+    const [cardName, setCardName] = useState (JSON.parse(localStorage.getItem('cardName'))||'');
+    const [cardNumber, setCardNumber] = useState (JSON.parse(localStorage.getItem('cardNumber'))||'');
+    const [expiry, setExpiry] = useState (JSON.parse(localStorage.getItem('expiry'))||'');
+    const [cvv, setCvv] = useState (JSON.parse(localStorage.getItem('cvv'))||'');
+    const [nameErr, setNameErr] = useState(false);
+    const [emailErr, setEmailErr] = useState(false);
+    const [phoneErr, setPhoneErr] = useState(false);
+    const [streetErr, setStreetErr] = useState(false);
+    const [unitErr, setUnitErr] = useState(false);
+    const [cityErr, setCityErr] = useState(false);
+    const [provinceErr, setProvinceErr] = useState(false);
+    const [zipErr, setZipErr] = useState(false);
+    const [downErr, setDownErr] = useState(false);
+    const [cardNameErr, setCardNameErr] = useState(false);
+    const [cardNumberErr, setCardNumberErr] = useState(false);
+    const [expiryErr, setExpiryErr] = useState(false);
+    const [cvvErr, setCvvErr] = useState(false); 
+    const [submissionConf, setSubmissionConf] = useState(false);
+    const [errorSubmissionConf, setErrorSubmissionConf] = useState(false);
+    const form = useRef();
+
+    const sendEmail = (e) => {
+      e.preventDefault();
+  
+      emailjs.sendForm('service_afl3hrp', 'template_179938t', form.current, 'ZKwlCsjVEQLd8sYTP')
+        .then((result) => {
+            console.log(result.text);
+        }, (error) => {
+            console.log(error.text);
+        });
+    };
+  
+    const vehicleDetails = () => {
+     const myArray = ['apple', 'banana', 'orange']
+     return myArray;
+  }
+
+
+
+    const validate = () => {
+      
+      if (!validName.test(name)) {
+        setNameErr(true);
+     }
+     else 
+     {
+       setNameErr(false);
+     }
+      
+     
+     if (!validPhone.test(phone)) {
+      setPhoneErr(true);
+   }
+   else 
+   {
+     setPhoneErr(false);
+   }
+     
+      if (!validEmail.test(email)) {
+           setEmailErr(true);
+        }
+        else 
+        {
+          setEmailErr(false);
+        }
+     
+        if (!validStreet.test(street)) {
+          setStreetErr(true);
+       }
+       else 
+       {
+         setStreetErr(false);
+       }
+  
+       if (!validUnit.test(unit)) {
+        setUnitErr(true);
+     }
+     else 
+     {
+       setUnitErr(false);
+     }
+     if (!validCity.test(city)) {
+      setCityErr(true);
+   }
+   else 
+   {
+     setCityErr(false);
+   }
+   if (!validProvince.test(province)) {
+    setProvinceErr(true);
+  }
+  else 
+  {
+   setProvinceErr(false);
+  }
+  if (!validZip.test(zip)) {
+    setZipErr(true);
+  }
+  else 
+  {
+   setZipErr(false);
+  }
+  if (!validDown.test(down)) {
+    setDownErr(true);
+  }
+  else 
+  {
+   setDownErr(false);
+  }
+  if (!validCardName.test(cardName)) {
+    setCardNameErr(true);
+  }
+  else 
+  {
+   setCardNameErr(false);
+  }
+  if (!validCardNumber.test(cardNumber)) {
+    setCardNumberErr(true);
+  }
+  else 
+  {
+   setCardNumberErr(false);
+  }
+  if (!validExpiry.test(expiry)) {
+    setExpiryErr(true);
+  }
+  else 
+  {
+   setExpiryErr(false);
+  }
+  if (!validCvv.test(cvv)) {
+    setCvvErr(true);
+  }
+  else 
+  {
+   setCvvErr(false);
+  }
+};
+     
+
+const validate1 = () => {
+      if (validName.test(name) && validPhone.test(phone) && validEmail.test(email) && validStreet.test(street) 
+      && validUnit.test(unit) && validCity.test(city) && validProvince.test(province) && validZip.test(zip) &&
+      validDown.test(down) && validCardName.test(cardName) && validCardNumber.test(cardNumber) && 
+      validExpiry.test(expiry) && validCvv.test(cvv))
+      
+      {
+      setSubmissionConf(true);
+      }
+      else 
+      {
+        setSubmissionConf(false);
+      }
+      
+
+  
+
+    if (!validName.test(name) || !validPhone.test(phone) || !validEmail.test(email) || !validStreet.test(street) 
+    || !validUnit.test(unit) || !validCity.test(city) || !validProvince.test(province) || !validZip.test(zip) ||
+    !validDown.test(down) || !validCardName.test(cardName) || !validCardNumber.test(cardNumber) || 
+    !validExpiry.test(expiry) || !validCvv.test(cvv))
+    
+    {
+    setErrorSubmissionConf(true);
+    }
+    else 
+    {
+      setErrorSubmissionConf(false);
+    }
+    
+
+  };
+
 
 
 
@@ -44,8 +269,11 @@ import carPic from '../pictures/car.png'
   <div id= "itemSpace"></div>
   
   <div id = "itemImage">
-  <img id = "imageProfile" alt="car" src={pic1}></img>
   
+  <Link to='./#'>  
+  <img id = "imageProfile" alt="car" src={pic1}></img>
+  </Link>
+
   </div>
   
   <div id= "itemSpace"></div>
@@ -94,7 +322,8 @@ import carPic from '../pictures/car.png'
   
   <div id = "squareBoxSpace1">
   <br></br>
-Estimated delivery date is Jan 1st 2024
+Estimated delivery date is <App/>
+  
 {/* A date function could be added here which adds few more days to the date  */}
 </div>
 </div>
@@ -125,8 +354,9 @@ Estimated delivery date is Jan 1st 2024
   <div id= "itemSpace"></div>
   
   <div id = "itemImage">
+  <Link to='./#'>  
   <img id = "imageProfile" alt="car" src={pic1}></img>
-  
+  </Link>
   </div>
   
   <div id= "itemSpace"></div>
@@ -177,8 +407,8 @@ Estimated delivery date is Jan 1st 2024
     
     <div id = "squareBoxSpace1">
     <br></br>
- Estimated delivery date is Jan 1st 2024 <br></br> 
- <h7 style = {{color : "red"}}>You have reached the maximum limit of 10 units</h7>  
+    Estimated delivery date is <App/><br></br> 
+ <h7 style = {{color : "red"}}>*You have reached the maximum limit of 10 units</h7>  
 
   {/* A date function could be added here which adds few more days to the date  */}
   </div>
@@ -195,7 +425,71 @@ Estimated delivery date is Jan 1st 2024
   }
     
 
+  function Price(props) {
+    return <h7>${55014 * count}</h7>
+    // <h3> (55*{props.multiply})</h3>
+  }
 
+  function Tax(props) {
+    return <h7>${7151 * count}</h7>
+    // <h3> (55*{props.multiply})</h3>
+  }
+                                             
+ function LicenseWarranty(props) {
+  return <h7>${1600 * count}</h7>
+  // <h3> (55*{props.multiply})</h3>
+}
+function ShippingGas (props) {
+return <h7>${900 * count}</h7>
+// <h3> (55*{props.multiply})</h3>
+}
+function Total (props) {
+return <h7>${64665 * count}</h7>
+// <h3> (55*{props.multiply})</h3>
+} 
+
+
+
+
+useEffect(() => {
+  localStorage.setItem("name", JSON.stringify(name));
+}, [name]);
+useEffect(() => {
+  localStorage.setItem("phone", JSON.stringify(phone));
+}, [phone]);
+useEffect(() => {
+  localStorage.setItem("email", JSON.stringify(email));
+}, [email]);
+useEffect(() => {
+  localStorage.setItem("street", JSON.stringify(street));
+}, [street]);
+useEffect(() => {
+  localStorage.setItem("unit", JSON.stringify(unit));
+}, [unit]);
+useEffect(() => {
+  localStorage.setItem("city", JSON.stringify(city));
+}, [city]);
+useEffect(() => {
+  localStorage.setItem("province", JSON.stringify(province));
+}, [province]);
+useEffect(() => {
+  localStorage.setItem("zip", JSON.stringify(zip));
+}, [zip]);
+useEffect(() => {
+  localStorage.setItem("down", JSON.stringify(down));
+}, [down]);
+useEffect(() => {
+  localStorage.setItem("cardName", JSON.stringify(cardName));
+}, [cardName]);
+useEffect(() => {
+  localStorage.setItem("cardNumber", JSON.stringify(cardNumber));
+}, [cardNumber]);
+useEffect(() => {
+  localStorage.setItem("expiry", JSON.stringify(expiry));
+}, [expiry]);
+useEffect(() => {
+localStorage.setItem("cvv", JSON.stringify(cvv));
+}, [cvv]);
 
 
     return (
@@ -297,17 +591,39 @@ Estimated delivery date is Jan 1st 2024
   {/* this is end of height 1 */}
   </div> 
  
+  
  
-  <div id="height2">
-    
-  <div id = "squareBoxSpace1">
+ 
+ <form id="height2" ref={form} onSubmit={sendEmail} onChange={validate}>
+
+ <div id = "squareBoxSpace1">
 
 </div>
-    
-  <div id = "squareBox2">
+   
+ <div id = "squareBox2">
 {/* HERE */}
 
-<div id="formSpace"></div>
+<div id="formSpace">
+
+{/* This here is a temporary solution but in future you will be linking vehicle details through wither local storage */}
+{/* or backend and will access it ust like {count} or {vehicle} as saved in */}
+
+<input
+      style={{fontSize : "15px", width : "0%", border: "white"}}
+         value = "2024 Toyota 4Runner"
+         name="to_vehicle" 
+       /> 
+       <input
+      style={{fontSize : "15px", width : "0%", border: "white"}}
+         value = "64,665"
+         name="to_price" 
+       /><input
+       style={{fontSize : "15px", width : "0%", border: "white"}}
+          value = {count}
+          name="to_quantity" 
+        /> 
+
+</div>
 
 
 <div id="form">
@@ -315,80 +631,105 @@ Estimated delivery date is Jan 1st 2024
 <div id="itemSpace"></div>
 <div id="form1">
 
-<form id = "formStyle"  
-// onSubmit={handleSubmit}
->
-      <input type="text" maxlength="99" style={{fontSize : "15px", width : "100%", border: "white"}}
-      // value={value} 
-      placeholder= "First & Last Name" 
-      // onChange={handleChange} 
-      />
-  
-    </form>
+
+
+<input
+       type="text" id = "formStyle" style={{fontSize : "15px", width : "100%"}}
+         value={name}
+         name="to_name" 
+         placeholder= "First & Last Name"
+         onChange={(e) => setName(e.target.value)} 
+         maxLength="50"
+       />
 
 </div>
+{nameErr && <h7 style = {{color: "red", textAlign: "left"}}>*Please re-enter</h7>}
 <div id="itemSpace"></div>
 <div id="form1">
 
-<form id = "formStyle"  
-// onSubmit={handleSubmit}
->
-      <input type="text" maxlength="99" style={{fontSize : "15px", width : "100%", border: "white"}}
-      // value={value} 
-      placeholder= "Phone" 
-      // onChange={handleChange} 
-      />
+
+    
+ <input
+       type="phone" 
+       id = "formStyle" style={{fontSize : "15px", width : "100%"}}
+         value={phone}
+         name="to_phone" 
+         placeholder= "Phone"
+         onChange={(e) => setPhone(e.target.value)}
+         maxLength="10"
+       />
+    
+
   
-    </form>
 
 
 
 </div>
+{phoneErr && <h7 style = {{color: "red"}}>*Please check</h7>}
 <div id="itemSpace"></div>
 
-  </div>
+ </div>
 
+ 
+
+<div id="form">
+<div id="itemSpace"></div>
+
+
+<div id="form2">
+
+
+  <input
+         type="email"
+         id = "formStyle" style={{fontSize : "15px", width : "100%"}}
+         name="to_email"
+         value={email}
+         placeholder= "Email"
+         onChange={(e) => setEmail(e.target.value)}       
+       />
+       
+ 
+ 
+
+
+</div>
+
+
+<div id="itemSpace"></div>
+{emailErr && <h7 style = {{color: "red"}}>*Please check your email address</h7>}
+</div>
 
 
 <div id="form">
 <div id="itemSpace"></div>
 
 
-<div id="form2" style={{color : "grey", fontSize : "15px"}}>Delivery Address</div>
-
-
-<div id="itemSpace"></div>
-</div>
-
-
-<div id="form">
-<div id="itemSpace"></div>
 
 
 
 <div id="form2">
 
-<form id = "formStyle"  
-// onSubmit={handleSubmit}
->
-      <input type="text" maxlength="99" style={{fontSize : "15px", width : "100%", border: "white"}}
-      // value={value} 
-      placeholder= "Street Number & Name" 
-      // onChange={handleChange} 
-      />
-  
-    </form>
+
+
+ 
+    
+
+<input
+       type="address" 
+         value={street}
+         name="to_street"
+         id = "formStyle" style={{fontSize : "15px", width : "100%"}}
+         placeholder= "Delivery Adress: Street Number & Name" 
+         onChange={(e) => setStreet(e.target.value)}
+         maxLength="50" 
+       />
+        
 
 
 </div>
 <div id="itemSpace"></div>
+{streetErr && <h7 style = {{color: "red"}}>*Please check your street address</h7>}
 </div>
-
-
-
-
-
-
 
 
 <div id="form">
@@ -396,85 +737,86 @@ Estimated delivery date is Jan 1st 2024
 <div id="itemSpace"></div>
 <div id="form1">
 
-<form id = "formStyle"  
-// onSubmit={handleSubmit}
->
-      <input type="text" maxlength="99" style={{fontSize : "15px", width : "100%", border: "white"}}
-      // value={value} 
-      placeholder= "Unit #" 
-      // onChange={handleChange} 
-      />
-  
-    </form>
+ 
+
+       <input
+       type="unit"
+       id = "formStyle" style={{fontSize : "15px", width : "100%"}}
+       placeholder= "Unit" 
+         value={unit}
+         onChange={(e) => setUnit(e.target.value)} 
+         maxLength="9" 
+         name="to_unit"
+       />
+
 
 </div>
+{unitErr && <h7 style = {{color: "red"}}>*Please check</h7>}
+
+<div id="itemSpace"></div>
+
+<div id="form1">
+
+
+   <input
+       type="text" 
+       id = "formStyle" style={{fontSize : "15px", width : "100%"}}
+       placeholder= "City"
+         value={city}
+         onChange={(e) => setCity(e.target.value)} 
+         maxLength="30"
+         name="to_city" 
+       />
+
+</div>
+       {cityErr && <h7 style = {{color: "red"}}>*Please check</h7>}
+<div id="itemSpace"></div>
+
+ </div>
+
+
+
+ <div id="form">
+
 <div id="itemSpace"></div>
 <div id="form1">
 
-<form id = "formStyle"  
-// onSubmit={handleSubmit}
->
-      <input type="text" maxlength="99" style={{fontSize : "15px", width : "100%", border: "white"}}
-      // value={value} 
-      placeholder= "City" 
-      // onChange={handleChange} 
-      />
-  
-    </form>
 
 
+<input
+       type="text" 
+         value={province}
+         id = "formStyle" style={{fontSize : "15px", width : "100%"}}
+         onChange={(e) => setProvince(e.target.value)} 
+         name="to_province" 
+         maxLength="30"
+         placeholder= "Province"
+       />
+    
 
 </div>
-<div id="itemSpace"></div>
-
-  </div>
-
-
-
-
-
-
-
-  <div id="form">
-
+{provinceErr && <h7 style = {{color: "red"}}>*Please check</h7>}
 <div id="itemSpace"></div>
 <div id="form1">
 
-<form id = "formStyle"  
-// onSubmit={handleSubmit}
->
-      <input type="text" maxlength="99" style={{fontSize : "15px", width : "100%", border: "white"}}
-      // value={value} 
-      placeholder= "Province" 
-      // onChange={handleChange} 
-      />
-  
-    </form>
+
+    
+      <input
+     id = "formStyle" style={{fontSize : "15px", width : "100%"}}
+       type="text" 
+       placeholder= "Postal Code" 
+         value={zip}
+         name="to_zip"
+         onChange={(e) => setZip(e.target.value)} 
+         maxLength="6" 
+       />
+       
 
 </div>
-<div id="itemSpace"></div>
-<div id="form1">
-
-<form id = "formStyle"  
-// onSubmit={handleSubmit}
->
-      <input type="text" maxlength="99" style={{fontSize : "15px", width : "100%", border: "white"}}
-      // value={value} 
-      placeholder= "Postal Code" 
-      // onChange={handleChange} 
-      />
-  
-    </form>
-
-
-
-</div>
+{zipErr && <h7 style =  {{color: "red"}}>*Format X1X1X1</h7>}
 <div id="itemSpace"></div>
 
-  </div>
-
-
-
+ </div>
 
 
 
@@ -490,23 +832,26 @@ Interest (%) <br></br>
 Term (months)<br></br>                                                                 
 Downpayment (CDN $) <br></br>                   
 </div>
-<div id ="formText2">$55,014<br></br>
-$7,151<br></br>
-$1,600<br></br>
-$900<br></br>
-$64,665<br></br>
+<div id ="formText2"><Price multiply = {count}/> <br></br>
+<Tax multiply = {count}/> <br></br>
+<LicenseWarranty multiply = {count} /> <br></br>
+<ShippingGas multiply = {count} />  <br></br>
+<Total multiply = {count}/> <br></br>
 4<br></br>
 72<br></br>
-<form id = "formStyle"  
-// onSubmit={handleSubmit}
->
-      <input type="text" maxlength="99" style={{fontSize : "14.4px", width : "100%", border: "white", textAlign: "right"}}
-      // value={value} 
-       
-      // onChange={handleChange} 
-      />
-  
-    </form>
+
+
+<input
+
+id = "formStyle" style={{fontSize : "15px", width : "100%"}}
+    type="text" 
+      value={down}
+      name= "to_down"
+      onChange={(e) => setDown(e.target.value)} 
+      maxLength="6" 
+    />
+     
+    
 </div>
 <div id="itemSpace"></div>
 {/* Upon payment submission, a message will be received via email/or pop up modal as follows */}
@@ -523,7 +868,10 @@ re-adjudication for approval of the car loan.
                           
 </div>
 
-<div id="formSpace"></div>
+<div id="formSpace">
+
+  {downErr && <h7 style = {{color: "red"}}>*Please check</h7>}
+</div>
 
 
 
@@ -546,43 +894,44 @@ re-adjudication for approval of the car loan.
   
   
   
-<form id = "formStyle"  
-// onSubmit={handleSubmit}
->
-      <input type="text" maxlength="99" style={{fontSize : "15px", width : "100%", border: "white"}}
-      // value={value} 
-      placeholder= "Cardholder Name" 
-      // onChange={handleChange} 
-      />
+
+    
   
-    </form>
-  
-  
-  
-  
+   <input
+id = "formStyle" style={{fontSize : "15px", width : "100%"}}
+   placeholder= "Cardholder Name" 
+        type="text" 
+          value={cardName}
+          onChange={(e) => setCardName(e.target.value)} 
+        />
+ 
   </div>
+
 <div id="itemSpace"></div>
+
+{cardNameErr && <h7 style = {{color: "red"}}>{nameErr && <h7 style = {{color: "red", textAlign: "left"}}>*Please re-enter your first & last name</h7>}</h7>}
+    
   </div>
 
   <div id="card">
   <div id="itemSpace"></div>
   <div id="form2">
     
-  <form id = "formStyle"  
-// onSubmit={handleSubmit}
->
-      <input type="text" maxlength="99" style={{fontSize : "15px", width : "100%", border: "white"}}
-      // value={value} 
-      placeholder= "Card Number" 
-      // onChange={handleChange} 
-      />
+
   
-    </form>
-    
-    
+   <input
+        type="text" 
+        id = "formStyle" style={{fontSize : "15px", width : "100%"}}
+          value={cardNumber}
+          onChange={(e) => setCardNumber(e.target.value)} 
+          placeholder= "Card Number" 
+          maxLength="16" 
+        />
+      
     
     </div>
 <div id="itemSpace"></div>
+{cardNumberErr && <h7 style = {{color: "red"}}> *Please check your card number</h7>}
   </div>
 
 <div id="cardText">
@@ -591,55 +940,65 @@ re-adjudication for approval of the car loan.
 <div id="itemSpace"></div>
 <div id ="cardText1">
   
-<form id = "formStyle"  
-// onSubmit={handleSubmit}
->
-      <input type="text" maxlength="99" style={{fontSize : "15px", width : "100%", border: "white"}}
-      // value={value} 
-      placeholder= "Expiration - MM/YY" 
-      // onChange={handleChange} 
-      />
+    
   
-    </form>
-  
-  
+  <input
+        type="text" 
+          value={expiry}
+          id = "formStyle" style={{fontSize : "15px", width : "100%"}}
+          onChange={(e) => setExpiry(e.target.value)} 
+          placeholder= "Expiration - MM/YY" 
+          maxLength="7" 
+        />
+        
   
               
 </div>
+
+{expiryErr && <h7 style = {{color: "red"}}>*Format MM/YY</h7>}
 <div id="itemSpace"></div>
+
+
 <div id ="cardText2">
   
-<form id = "formStyle"  
-// onSubmit={handleSubmit}
->
-      <input type="text" maxlength="99" style={{fontSize : "15px", width : "100%", border: "white"}}
-      // value={value} 
-      placeholder= "CVV" 
-      // onChange={handleChange} 
-      />
+ 
   
-    </form>  
-  </div>
+  <input
+        type="text" 
+          value={cvv}
+          id = "formStyle" style={{fontSize : "15px", width : "100%"}}
+           placeholder= "CVV"
+          onChange={(e) => setCvv(e.target.value)} 
+          maxLength="3" 
+        />
 
+  </div>
+  {cvvErr && <h7 style = {{color: "red"}}>*Please check</h7>}
 <div id="itemSpace"></div>
 </div>
 
 
 <div id="cardTextDown">
 
-  
-  <p style={{fontSize: "13.2px", color: "white"}}>Maunny, Downtown Barrie</p>
+ <div id = "threeDivision1">
+  {/* <p style={{fontSize: "13.2px", color: "white"}}>Maunny, Downtown Barrie</p> */}
+  <img id = "imageProfile1" alt="car" src={interac}></img>
+  </div> 
 
-  <input type="checkbox"/>
-  {' '}
-Save your card
-<br></br>
-<br></br>
+
+
+<div id = "threeDivision2">
+
+<img id = "imageProfile1" alt="car" src={visaMastercard}></img>
+  </div>
+
+<div id = "threeDivision3">
 <input type="checkbox"/>
 {' '}
-Pickup address
+I have checked all my details  
 <br></br>
-Maunny's Warehouse, King St, Toronto, ON
+All the information I have entered is correct 
+</div>
 
 
 
@@ -651,16 +1010,20 @@ timings such as Mon-Sat: 6am-9pm, Sun: 9am-6pm */}
 {/* 
 Once saved this card it will be in local storage which later be back end
 */}
+{/* end of carTextDown */}
 </div>
                           {/* ending carText */}
 </div> 
 
 <div id="cardPay">
 
-<button style = {{fontFamily: "roboto", fontSize: "15px", width: "78px", color: "white", background: "black", paddingTop: "1px"}}>
-        PAY
+<button onClick={validate1} style = {{fontFamily: "roboto", fontSize: "15px", width: "78px", color: "white", background: "black", paddingTop: 
+"1px"}} 
+type="submit" 
+>
+PAY
+      
 </button>
-
 
 {/* style = {{fontFamily: "roboto", fontSize: "15px", width: "26px", color: "white", background: "black"}} */}
 
@@ -674,22 +1037,48 @@ Once saved this card it will be in local storage which later be back end
 </div> 
 
 <div id = "squareBoxSpace1">
+  <br></br>
+
+
+  
+  {errorSubmissionConf && <h7 style = {{color: "green"}}>*PAYMENT ACCEPTED ! ORDER PLACED !   Order # BR08384<br></br>
+Call at 1-800-888-6688 for questions regarding order details</h7>}
+
+
+{submissionConf && <h7 style = {{color: "green"}}>*PAYMENT ACCEPTED ! ORDER PLACED !   Order # BR08384<br></br>
+You will soon recieve an email at {email}</h7>}
+
+
 
 </div>
 
-
+</form>
 {/* this is end of height 2 */}
-  </div>
- 
-  
-  
   
 
-  {/* <button class="scroll-btn scroll-to-left btn btn-light btn-arrow-left"  */}
-  {/* type="button"><i class="fas fa-chevron-left"></i></button> */}
-    {/* <button class="scroll-btn scroll-to-right btn btn-light btn-arrow-right" type="button"><i class="fas fa-chevron-right"></i></button> */}
-        
-         {/* this is end of button */}
+  
+ 
+ 
+{/* const Mailto = ({ email, subject = '', body = '', children }) => { */}
+  {/* let params = subject || body ? '?' : ''; */}
+  {/* if (subject) params += `subject=${encodeURIComponent(subject)}`; */}
+  {/* if (body) params += `${subject ? '&' : ''}body=${encodeURIComponent(body)}`; */}
+
+  {/* return <a href={`mailto:${email}${params}`}>{children}</a>; */}
+{/* }; */}
+
+{/* ReactDOM.createRoot(document.getElementById('root')).render( */}
+  {/* <Mailto email="foo@bar.baz" subject="Hello & Welcome" body="Hello world!"> */}
+    {/* Mail me! */}
+  {/* </Mailto> */}
+{/* ); */}
+  
+
+
+
+
+
+
    </div>
   
 

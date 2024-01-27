@@ -139,10 +139,12 @@ height: 100%;
 
 #squareBoxSpace1
 {
+  padding-top: 2.5px;
   width: 100%;
   height: 93.33px;
   
 }
+
 #squareBoxSpace2
 {
   width: 100%;
@@ -235,10 +237,41 @@ height: 100%;
 
 #cardTextDown
 {
-  padding-top: 24.9px;
+  /* padding-top: 24.9px; */
   width: 100%;
   height: 80%;
+  display: flex;
+  flex-direction: column;
+
 }
+
+
+#threeDivision1
+{
+  
+height: 33.33%;
+width: 100%;
+padding-top: 20.5px;
+/* padding-top: 18px; */
+}
+
+#threeDivision2
+{
+
+height: 23.33%;
+width: 100%;
+/* padding-bottom: 15px; */
+padding-top: 4px
+}
+
+#threeDivision3
+{
+  padding-top: 12.75px;;
+height: 43.33%;
+width: 100%;
+
+}
+
 
 #cardPay
 {
@@ -279,6 +312,11 @@ width: 6%;
 height: 100%;
 }
 
+#itemSpace2
+{
+width: 9%;
+height: 100%;
+}
 
 
 #itemImage
@@ -296,6 +334,15 @@ margin-top: 35%;
   /* border: 5px solid #ECEFF8; */
 /* use the above comment as measuring tool */
 }
+
+#imageProfile1
+{
+
+  width: 11.25%;
+
+}
+
+
 
 
 #itemDetail

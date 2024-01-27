@@ -1,1 +1,0 @@
-# Maunny-Auto-Finance-Calculator
